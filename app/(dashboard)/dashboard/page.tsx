@@ -11,6 +11,8 @@ export default async function DashboardPage({}: DashboardPageProps) {
   // get the session of google
   const session = await getServerSession(authOptions);
 
+  console.log(session);
+
   return (
     <pre>{JSON.stringify(session)}</pre>
   )

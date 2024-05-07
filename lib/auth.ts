@@ -2,6 +2,7 @@ import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { NextAuthOptions } from "next-auth";
 import { db } from "./db";
 import GoogleProvider from "next-auth/providers/google";
+import { fetchRedis } from "@/helpers/redis";
 
 // Obtiene las credenciales de Google de las variables de entorno
 function getGoogleCredentials() {
@@ -43,21 +44,29 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         // User usa una interfaz que esta en types
         async jwt({token, user}) {
-            const dbUser = await db.get(`user:${token.id}`) as User | null;
 
-            // Si el usuario no existe en la base de datos, se crea un nuevo token
-            if (!dbUser) {
-                // La exclamación es para decirle a TypeScript que no es nulo
-                token.id = user!.id;
-                return token;
+            // Se obtiene el usuario de la base de datos
+            const dbUserResult = (await fetchRedis('get', `user:${token.id}`)) as
+            | string
+            | null
+    
+            // Si el usuario no existe en la base de datos, se usa el usuario de Google
+          if (!dbUserResult) {
+            if (user) {
+              token.id = user!.id
             }
-
-            return {
-                id: dbUser.id,
-                name: dbUser.name,
-                email: dbUser.email,
-                picture: dbUser.image,
-            }
+    
+            return token
+          }
+    
+          const dbUser = JSON.parse(dbUserResult) as User
+    
+          return {
+            id: dbUser.id,
+            name: dbUser.name,
+            email: dbUser.email,
+            picture: dbUser.image,
+          }
         },
         // Sirve para que se cree la sesión
         async session({session, token}) {

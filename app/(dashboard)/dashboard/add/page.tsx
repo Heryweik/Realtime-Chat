@@ -1,3 +1,4 @@
+import AddFriendButton from "@/components/AddFriendButton";
 
 
 export default function AddPage() {
