@@ -14,6 +14,6 @@ export default async function DashboardPage({}: DashboardPageProps) {
   console.log(session);
 
   return (
-    <pre>{JSON.stringify(session)}</pre>
+    <pre>Dashboard</pre>
   )
 }
