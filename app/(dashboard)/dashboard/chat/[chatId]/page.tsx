@@ -15,7 +15,7 @@ interface ChatPageProps {
   }
 }
 
-async function getCharMessages(chatId: string) {
+async function getChatMessages(chatId: string) {
   try {
     // Obtenemos los mensajes de la conversación, zrange obtiene los mensajes de un rango de 0 a -1
     const result: string[] = await fetchRedis('zrange', `chat:${chatId}:messages`, 0, -1)
@@ -65,14 +65,14 @@ export default async function ChatPage({params}: ChatPageProps) {
   const chatPartner = await db.get(`user:${chatPartnerId}`) as User
 
   // Obtenemos los mensajes de la conversación
-  const initialMessages = await getCharMessages(chatId)
+  const initialMessages = await getChatMessages(chatId)
 
   
     // Id del chat
     {/* <div>{chatId}</div> */}
 
   return (
-    <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
+    <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-1rem)]">
       {/* {chatId} */}
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
         <div className="relative flex items-center space-x-4">
@@ -103,8 +103,8 @@ export default async function ChatPage({params}: ChatPageProps) {
         </div>
       </div>
 
-      <Messages initialMessages={initialMessages} sessionId={session.user.id}/>
-      <ChatInput />
+      <Messages initialMessages={initialMessages} sessionId={session.user.id} sessionImg={session.user.image} chatPartner={chatPartner}/>
+      <ChatInput chatPartnerId={chatPartner} chatId={chatId} />
     </div>
   )
 }
