@@ -69,7 +69,7 @@ export default async function DashboardPage({}: DashboardPageProps) {
               <ChevronRight className='h-7 w-7 text-zinc-400' />
             </div>
 
-            <Link
+            <a
               href={`/dashboard/chat/${chatHrefConstructor(
                 session.user.id,
                 friend.id
@@ -98,7 +98,7 @@ export default async function DashboardPage({}: DashboardPageProps) {
                   {friend.lastMessage.text}
                 </p>
               </div>
-            </Link>
+            </a>
           </div>
         ))
       )}

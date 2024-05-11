@@ -43,12 +43,12 @@ export default function MobileChatLayout({
   return (
     <div className="fixed bg-zinc-50 border-b border-zinc-200 top-0 inset-x-0 py-2 px-4">
       <div className="w-full flex justify-between z-50 items-center">
-        <Link
+        <a
           href="/dashboard"
           className={buttonVariants({ variant: "ghost" })}
         >
           <Icons.Logo className="h-6 w-auto text-indigo-600" />
-        </Link>
+        </a>
         <Button onClick={() => setOpen(true)} className="gap-4 ring-1 ring-gray-300" variant={'ghost'}>
           Menu <Menu className="h-6 w-6" />
         </Button>
@@ -74,9 +74,9 @@ export default function MobileChatLayout({
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
                           <DialogTitle className="text-base font-semibold leading-6 text-gray-900">
-                            <Link href={'/dashboard'}>
+                            <a href={'/dashboard'}>
                             Dashboard
-                            </Link>
+                            </a>
                           </DialogTitle>
                           <div className="ml-3 flex h-7 items-center">
                             <button
