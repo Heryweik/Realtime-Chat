@@ -42,7 +42,7 @@ export default async function DashboardLayout({
   return (
     <div className="w-full flex h-screen">
       {/* Burguer para moviles */}
-      <div className="md:hidden">
+      <div className="md:hidden z-50">
         <MobileChatLayout friends={friends} session={session} unseenRequestCount={unseenRequestCount} />
       </div>
 
