@@ -103,7 +103,9 @@ export default async function DashboardLayout({
         </nav>
       </div>
 
+      <section className="max-h-screen container py-16 md:py-12 w-full">
       {children}
+      </section>
     </div>
   );
 }

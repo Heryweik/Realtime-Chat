@@ -29,6 +29,11 @@ export default function ChatInput({ chatPartnerId, chatId }: ChatInputProps) {
       // Esperamos un segundo para simular el tiempo que se tarda en enviar un mensaje
       /* await new Promise((resolve) => setTimeout(resolve, 1000)) */
 
+      // Si el mensaje esta vacío, no se envía
+      if (!input.trim()) {
+        return
+      }
+
       await axios.post('/api/message/send', {
         text: input,
         chatId

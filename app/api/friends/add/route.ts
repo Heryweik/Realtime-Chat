@@ -1,6 +1,8 @@
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/utils";
 import { addFriendValidator } from "@/lib/validations/add-friend";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
@@ -66,6 +68,14 @@ export async function POST(req: Request) {
     if (isAlreadyFriends) {
         return new Response('This user is already your friend', { status: 400 });
     }
+
+    // Usamos pusher para enviar la solicitud de amistad en tiempo real
+     pusherServer.trigger(
+      toPusherKey(`user:${idToAdd}:incoming_friend_requests`), 'incoming_friend_requests', {
+        senderId: session.user.id,
+        senderEmail: session.user.email,
+      }
+    ),
 
     // Se agrega la solicitud de amistad
     // el sadd es un parametro de la API de upstash

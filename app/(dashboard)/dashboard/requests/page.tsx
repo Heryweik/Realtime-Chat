@@ -38,7 +38,7 @@ export default async function RequestsPage() {
         <h1 className='font-bold text-5xl mb-8'>Add a friend</h1>
         <div className='flex flex-col gap-4'>
             {/* Este es un Client component */}
-            <FriendRequests incomingFriendRequests={incomingFriendRequests} session={session.user.id}/>
+            <FriendRequests incomingFriendRequests={incomingFriendRequests} sessionId={session.user.id}/>
         </div>
     </main>
   )

@@ -2,13 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { chatHrefConstructor, cn } from "@/lib/utils";
+import { chatHrefConstructor, cn, toPusherKey } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
+import { pusherClient } from "@/lib/pusher";
+import toast from "react-hot-toast";
+import UnseenChatToast from "./UnseenChatToast";
 
 interface SidebarChatListProps {
   friends: User[];
   sessionId: string;
+}
+
+// Interfaz extendida de Message por lo tanto tiene todos sus atributos mas los nuevoa
+interface ExtendedMessage extends Message {
+  senderImg: string;
+  senderName: string;
 }
 
 export default function SidebarChatList({
@@ -20,6 +29,49 @@ export default function SidebarChatList({
   const pathname = usePathname();
 
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
+    pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
+
+    // Actualizamos la lista de mensajes no vistos en tiempo real
+    const chatHandler = ( message : ExtendedMessage) => {
+      // Verificamos si el usuario actual está fuera de la conversación
+      const shouldNotify = pathname !== `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`;
+
+      if (!shouldNotify) return;
+
+      toast.custom((t) => (
+        // Creamos una notificación personalizada
+        <UnseenChatToast 
+          t={t}
+          sessionId={sessionId}
+          senderId={message.senderId}
+          senderImage={message.senderImg}
+          senderName={message.senderName}
+          senderMessage={message.text}
+        />
+      ))
+
+      // Agregamos el mensaje no visto a la lista
+      setUnseenMessages((prev) => [...prev, message]);
+    }
+
+    const newFriendHandler = () => {
+      router.refresh();
+    }
+
+    pusherClient.bind("new_message", chatHandler);
+    pusherClient.bind("new_friend", newFriendHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
+
+      pusherClient.unbind('new_message', chatHandler)
+      pusherClient.unbind('new_friend', newFriendHandler)
+    }
+  }, [pathname, sessionId, router]);
 
   // Este useEffect se ejecuta cada vez que la ruta cambia
   useEffect(() => {
@@ -46,7 +98,7 @@ export default function SidebarChatList({
           <li key={friend.id}>
             {/* Hacemos que la ruta tenga los Ids del usuario y del amigo al que estamos ingresando para ver el chat */}
             {/* El ancor a diferencia del Link recarga la página */}
-            <Link
+            <a
               href={`/dashboard/chat/${chatHrefConstructor(
                 sessionId,
                 friend.id
@@ -56,7 +108,7 @@ export default function SidebarChatList({
 
                 pathname ===
                   `/dashboard/chat/${chatHrefConstructor(sessionId, friend.id)}`
-                  ? "bg-gray-100 text-indigo-600"
+                  ? "bg-gray-50 text-indigo-600"
                   : ""
               )}
             >
@@ -75,7 +127,7 @@ export default function SidebarChatList({
                   {unseenMessagesCount}
                 </div>
               )}
-            </Link>
+            </a>
           </li>
         );
       })}

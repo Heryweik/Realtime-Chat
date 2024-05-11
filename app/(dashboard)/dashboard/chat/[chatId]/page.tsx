@@ -103,7 +103,7 @@ export default async function ChatPage({params}: ChatPageProps) {
         </div>
       </div>
 
-      <Messages initialMessages={initialMessages} sessionId={session.user.id} sessionImg={session.user.image} chatPartner={chatPartner}/>
+      <Messages initialMessages={initialMessages} sessionId={session.user.id} sessionImg={session.user.image} chatPartner={chatPartner} chatId={chatId}/>
       <ChatInput chatPartnerId={chatPartner} chatId={chatId} />
     </div>
   )
