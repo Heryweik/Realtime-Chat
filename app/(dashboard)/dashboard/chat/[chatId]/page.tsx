@@ -78,7 +78,7 @@ export default async function ChatPage({params}: ChatPageProps) {
   return (
     <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-1rem)]">
       {/* {chatId} */}
-      <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+      <div className="flex sm:items-center justify-between py-1 md:py-3 border-b-2 border-gray-200">
         <div className="relative flex items-center space-x-4">
           <div className="relative">
             <div className="relative w-8 sm:w-12 h-8 sm:h-12">
@@ -94,13 +94,13 @@ export default async function ChatPage({params}: ChatPageProps) {
           </div>
 
           <div className="flex flex-col leading-tight">
-            <div className="text-xl flex items-center">
+            <div className="text-lg md:text-xl flex items-center">
               <span className="text-gray-700 mr-3 font-semibold">
                 {chatPartner.name}
               </span>
             </div>
 
-            <span className="text-sm text-gray-600">
+            <span className="text-xs md:text-sm text-gray-600">
               {chatPartner.email}
             </span>
           </div>
