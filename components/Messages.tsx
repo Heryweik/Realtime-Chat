@@ -139,9 +139,9 @@ export default function Messages({
                     //inline-block break-words max-w-60 sm:max-w-xs md:max-w-md
                     // Se usa hyphens-auto para que las palabras largas no se salgan del contenedor, se podria usar break-word pero no va bien ya que el div no se auto ajusta a la pantalla
                     "px-4 py-2 rounded-xl  hyphens-auto mb-1",
-                    // Si el mensaje es mayor a 62 caracteres, se rompe la palabra, si no, se hace un guion, esto ya que algunos mensajes largos no se ven bien y rompen la UI
-                    // El 62 es un numero que se saco a prueba y error ya que por alguna razón hasta ese punto se rompe
-                    longestWordLength > 62  ? 'break-all' : '',
+                    // Si el mensaje es mayor a 20 caracteres, se rompe la palabra, si no, se hace un guion, esto ya que algunos mensajes largos no se ven bien y rompen la UI
+                    // El 20 es un numero que se saco a prueba y error ya que por alguna razón hasta ese punto se rompe
+                    longestWordLength > 25 ? 'break-all' : '',
                     { "bg-indigo-600 text-white": isCurrentUser },
                     { "bg-gray-200 text-gray-900": !isCurrentUser },
                     {

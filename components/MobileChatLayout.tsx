@@ -49,7 +49,7 @@ export default function MobileChatLayout({
         >
           <Icons.Logo className="h-6 w-auto text-indigo-600" />
         </a>
-        <Button onClick={() => setOpen(true)} className="gap-4 ring-1 ring-gray-300" variant={'ghost'}>
+        <Button onClick={() => setOpen(true)} className="gap-4 " variant={'ghost'}> {/* ring-1 ring-gray-300 */}
           Menu <Menu className="h-6 w-6" />
         </Button>
       </div>

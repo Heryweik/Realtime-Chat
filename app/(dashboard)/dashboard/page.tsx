@@ -74,7 +74,7 @@ export default async function DashboardPage({}: DashboardPageProps) {
                 session.user.id,
                 friend.id
               )}`}
-              className='relative flex'>
+              className='relative flex whitespace-nowrap truncate'>
               <div className=' flex-shrink-0 mb-0 mr-4'>
                 <div className='relative h-6 w-6'>
                   <Image
@@ -87,9 +87,9 @@ export default async function DashboardPage({}: DashboardPageProps) {
                 </div>
               </div>
 
-              <div>
+              <div className="whitespace-nowrap truncate pr-10">
                 <h4 className='text-lg font-semibold whitespace-nowrap truncate'>{friend.name}</h4>
-                <p className='mt-1 max-w-md whitespace-nowrap truncate pr-10'>
+                <p className='mt-1  whitespace-nowrap truncate'>
                   <span className='text-zinc-400'>
                     {friend.lastMessage.senderId === session.user.id
                       ? 'You: '
