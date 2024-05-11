@@ -32,18 +32,21 @@ export default function SidebarChatList({
 
   useEffect(() => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
+    // Nos suscribimos a los amigos del usuario, esto es para saber si se agrega un nuevo amigo y lo veamos en tiempo real
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
 
     // Actualizamos la lista de mensajes no vistos en tiempo real
-    const chatHandler = ( message : ExtendedMessage) => {
+    const chatHandler = (message: ExtendedMessage) => {
       // Verificamos si el usuario actual está fuera de la conversación
-      const shouldNotify = pathname !== `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`;
+      const shouldNotify =
+        pathname !==
+        `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`;
 
       if (!shouldNotify) return;
 
       toast.custom((t) => (
         // Creamos una notificación personalizada
-        <UnseenChatToast 
+        <UnseenChatToast
           t={t}
           sessionId={sessionId}
           senderId={message.senderId}
@@ -51,15 +54,17 @@ export default function SidebarChatList({
           senderName={message.senderName}
           senderMessage={message.text}
         />
-      ))
+      ));
 
       // Agregamos el mensaje no visto a la lista
       setUnseenMessages((prev) => [...prev, message]);
-    }
+    };
 
     const newFriendHandler = () => {
+      // Actualizamos la lista de amigos cuando se agrega un nuevo amigo
+
       router.refresh();
-    }
+    };
 
     pusherClient.bind("new_message", chatHandler);
     pusherClient.bind("new_friend", newFriendHandler);
@@ -68,9 +73,9 @@ export default function SidebarChatList({
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
 
-      pusherClient.unbind('new_message', chatHandler)
-      pusherClient.unbind('new_friend', newFriendHandler)
-    }
+      pusherClient.unbind("new_message", chatHandler);
+      pusherClient.unbind("new_friend", newFriendHandler);
+    };
   }, [pathname, sessionId, router]);
 
   // Este useEffect se ejecuta cada vez que la ruta cambia
@@ -104,7 +109,7 @@ export default function SidebarChatList({
                 friend.id
               )}`}
               className={cn(
-                "text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
+                "text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold whitespace-nowrap truncate",
 
                 pathname ===
                   `/dashboard/chat/${chatHrefConstructor(sessionId, friend.id)}`

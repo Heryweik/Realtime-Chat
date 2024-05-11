@@ -59,7 +59,7 @@ export default function FriendRequests({
       prev.filter((request) => request.senderId !== senderId)
     );
 
-    /* window.location.reload(); */
+    window.location.reload();
     router.refresh()
   };
 
@@ -74,7 +74,7 @@ export default function FriendRequests({
       prev.filter((request) => request.senderId !== senderId)
     );
 
-    /* window.location.reload(); */
+    window.location.reload();
     router.refresh()
   };
 
