@@ -30,6 +30,8 @@ export default function SidebarChatList({
 
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
 
+  const [activeChats, setActiveChats] = useState<User[]>(friends);
+
   useEffect(() => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
     // Nos suscribimos a los amigos del usuario, esto es para saber si se agrega un nuevo amigo y lo veamos en tiempo real
@@ -60,10 +62,11 @@ export default function SidebarChatList({
       setUnseenMessages((prev) => [...prev, message]);
     };
 
-    const newFriendHandler = () => {
+    const newFriendHandler = (newFriend: User) => {
       // Actualizamos la lista de amigos cuando se agrega un nuevo amigo
+      setActiveChats((prev) => [...prev, newFriend]);
 
-      router.refresh();
+      /* router.refresh(); */
     };
 
     pusherClient.bind("new_message", chatHandler);

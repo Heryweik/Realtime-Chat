@@ -81,7 +81,7 @@ export default function AddFriendButton() {
       <p className="mt-3 text-sm text-red-600 p-2 bg-red-100 rounded-md border border-red-600">{errors.email?.message}</p>
       }
       {showSuccess && (
-        <p className="mt-3 text-sm text-green-600 bg-green-100 rounded-md border border-green-600">Friend request sent!</p>
+        <p className="mt-3 text-sm text-green-600 p-2 bg-green-100 rounded-md border border-green-600">Friend request sent!</p>
       )}
     </form>
   );

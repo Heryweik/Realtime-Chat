@@ -62,7 +62,11 @@ export default async function ChatPage({params}: ChatPageProps) {
   // Obtenemos la información del amigo con el que estamos chateando
   // El fetchRedis no funciona en el server component, por eso usamos db.get
   // No funciona porque fetchRedis hace una petición a la API de Upstash, y eso no se puede hacer en un server component
-  const chatPartner = await db.get(`user:${chatPartnerId}`) as User
+  /* const chatPartner = await db.get(`user:${chatPartnerId}`) as User */
+
+  // Ahora si funciona el error estaba en que habia que convertir el resultado a string y luego a JSON
+  const chatPartnerRow = await fetchRedis('get', `user:${chatPartnerId}`) as string
+  const chatPartner = JSON.parse(chatPartnerRow) as User
 
   // Obtenemos los mensajes de la conversación
   const initialMessages = await getChatMessages(chatId)
