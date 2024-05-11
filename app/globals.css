@@ -58,3 +58,9 @@ body {
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
   border-radius: 0.25rem;
 }
+
+/* Para que no se vea el scroll en el input del mensaje */
+.no-scrollbar::-webkit-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

@@ -40,7 +40,7 @@ export default async function DashboardLayout({
   ).length;
 
   return (
-    <div className="w-full flex h-screen">
+    <div className="w-full flex h-svh">
       {/* Burguer para moviles */}
       <div className="md:hidden z-50">
         <MobileChatLayout friends={friends} session={session} unseenRequestCount={unseenRequestCount} />
@@ -109,7 +109,7 @@ export default async function DashboardLayout({
         </nav>
       </div>
 
-      <section className="max-h-screen container py-16 md:py-12 w-full">
+      <section className=" container py-16 md:py-12 w-full">
       {children}
       </section>
     </div>
