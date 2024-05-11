@@ -42,7 +42,7 @@ export default function MobileChatLayout({
 
   return (
     <div className="fixed bg-zinc-50 border-b border-zinc-200 top-0 inset-x-0 py-2 px-4">
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-between z-50 items-center">
         <Link
           href="/dashboard"
           className={buttonVariants({ variant: "ghost" })}
