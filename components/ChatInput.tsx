@@ -67,7 +67,7 @@ export default function ChatInput({ chatPartnerId, chatId }: ChatInputProps) {
           // Contiene el valor del input que el usuario escribe
           onChange={(e) => setInput(e.target.value)}
           placeholder={`Message ${chatPartnerId.name}`}
-          className="block w-full max-h-32 overflow-y-auto no-scrollbar resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-2 text-sm sm:leading-6"
+          className="block w-full max-h-32 overflow-y-auto no-scrollbar resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-2 text-base sm:leading-6"
         />
 
         {/* Este div sirve para que el textarea tenga un padding arriba y abajo, hacemos referencia al textareaRef para que cuando se haga click en el div, el textarea se enfoque */}
