@@ -63,7 +63,8 @@ export async function POST(req: Request) {
     const message = messageValidator.parse(messageData);
 
     // Usamos pusher para ver los mensajes en tiempo real
-    pusherServer.trigger(
+    // este await va solo el produccion
+    await pusherServer.trigger(
       toPusherKey(`chat:${chatId}`),
       "incoming_message",
       message
@@ -71,7 +72,7 @@ export async function POST(req: Request) {
 
     // Usamos pusher para ver si hay mensajes nuevos en cualquier chat
     // Esto es para mostrar la cantidad de mensajes no vistos en la lista de chats y la notificación
-    pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), "new_message", {
+    await pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), "new_message", {
       ...message,
       senderImg: parsedSender.image,
       senderName: parsedSender.name,

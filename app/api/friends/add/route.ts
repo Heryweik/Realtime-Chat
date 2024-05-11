@@ -70,7 +70,8 @@ export async function POST(req: Request) {
     }
 
     // Usamos pusher para enviar la solicitud de amistad en tiempo real
-     pusherServer.trigger(
+    // este await va solo el produccion
+    await pusherServer.trigger(
       toPusherKey(`user:${idToAdd}:incoming_friend_requests`), 'incoming_friend_requests', {
         senderId: session.user.id,
         senderEmail: session.user.email,
