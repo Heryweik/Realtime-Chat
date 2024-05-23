@@ -128,7 +128,7 @@ export default function Messages({
             >
               <div
                 className={cn(
-                  "flex flex-col space-y-2 text-sm md:text-base relative max-w-[60%]",
+                  "flex flex-col space-y-2 text-sm md:text-base relative max-w-[80%] md:max-w-[60%]",
                   { "order-1 items-end": isCurrentUser },
                   { "order-2 items-start": !isCurrentUser }
                 )}
